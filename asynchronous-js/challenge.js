@@ -30,7 +30,7 @@ whereAmI(52.508, 13.381);
 // whereAmI(-33.933, 18.474);
 */
 
-console.log('challenge 2');
+//console.log('challenge 2');
 
 const wait = function (seconds) {
   return new Promise(resolve => setTimeout(resolve, seconds * 1000));
@@ -52,6 +52,7 @@ const createImage = function (imgPath) {
   });
 };
 
+/*
 let currentImage;
 createImage('img/img-1.jpg')
   .then(img => {
@@ -72,3 +73,41 @@ createImage('img/img-1.jpg')
     currentImage.style.display = 'none';
   })
   .catch(err => console.error(err));
+
+  */
+
+console.log('challenge 3');
+
+const loadNPause = async function () {
+  try {
+    //image 1
+    let img = await createImage('img/img-1.jpg');
+    console.log('Image 1 loaded');
+    await wait(2);
+    img.style.display = 'none';
+
+    //image 2
+    img = await createImage('img/img-2.jpg');
+    console.log('Image 2 loaded');
+    await wait(2);
+    img.style.display = 'none';
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+//loadNPause();
+
+const loadAll = async function (images) {
+  try {
+    const imgs = images.map(async img => await createImage(img));
+
+    const imgEl = await Promise.all(imgs);
+    //console.log(imgEl);
+    imgEl.forEach(img => img.classList.add('parallel'));
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+loadAll(['img/img-1.jpg', 'img/img-2.jpg', 'img/img-3.jpg']);
